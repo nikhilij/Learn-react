@@ -1,0 +1,103 @@
+/* Header.css */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #190482;
+}
+
+.logo-container {
+    display: inline-flex;
+    align-items: center;
+    margin: 5px 10px;
+    padding: 5px 10px;
+    
+}
+
+/* Header.css */
+
+/* ... (other styles) ... */
+
+.logo-container h1 {
+    display: inline;
+    font-weight: 500;
+    background-image: linear-gradient(to left, #ff6a00, #ee0979);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 2.5rem;
+    animation: changeBackground 4s ease-in-out infinite; /* Add this line to set the font size */
+}
+
+/* ... (other styles) ... */
+
+@keyframes changeBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    /* Start position */
+    50% {
+        background-position: 100% 50%;
+    }
+
+    /* Middle position */
+    100% {
+        background-position: 0% 50%;
+    }
+
+    /* End position */
+}
+
+
+#logo {
+    width: 50px;
+    height: 50px;
+}
+
+a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+a h1 {
+    
+    color: white;
+    font-weight: 500;
+    font-style: normal;
+    margin-left: 10px;
+}
+
+nav ul {
+    padding-right: 50px;
+    list-style: none;
+    display: flex;
+    gap: 35px;
+}
+
+nav li {
+    color: black;
+    font-weight: 400;
+    font-family: "Roboto", sans-serif;
+    font-size: 24px;
+    text-transform: uppercase;
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for color and transform */
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease; /* Smooth transition for color */
+}
+
+nav li:hover {
+    color: #ffd700; /* Change color on hover */
+    transform: scale(1.1); /* Slightly enlarge the item on hover */
+}
+
+nav a:hover {
+    color: #ffd700; /* Change color on hover */
+}
