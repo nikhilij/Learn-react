@@ -1,10 +1,3 @@
-/* 
-const initialItems = [
-  { id: 1, description: "Passports", quantity: 2, packed: false },
-  { id: 2, description: "Socks", quantity: 12, packed: false },
-];
-*/
-
 @import url("https://fonts.googleapis.com/css2?family=Monoton&family=Quicksand:wght@500;700&display=swap");
 
 * {
@@ -15,14 +8,16 @@ const initialItems = [
 
 html {
   font-size: 62.5%;
+  /* Base font size */
 }
 
 body {
   font-size: 2.4rem;
-  font-family: sans-serif;
+  /* Base font size */
+  font-family: "Quicksand", sans-serif;
+  /* Use Quicksand as the font */
   color: #5a3e2b;
-  font-family: "Quicksand";
-  font-weight: 500;
+  /* Text color */
 }
 
 .app {
@@ -30,116 +25,279 @@ body {
   height: 100vh;
   display: grid;
   grid-template-rows: auto auto 1fr auto;
+  /* Grid layout */
 }
 
 h1 {
   text-align: center;
   background-color: #f4a226;
-  font-family: "Monoton";
-  font-size: 8rem;
+  /* Header background color */
+  font-family: "Monoton", sans-serif;
+  /* Header font */
+  font-size: 6rem;
+  /* Header font size */
   text-transform: uppercase;
   font-weight: 400;
   word-spacing: 30px;
   letter-spacing: -5px;
   padding: 2.4rem 0;
+  /* Padding around header */
 }
 
 .add-form {
   background-color: #e5771f;
-  padding: 2.8rem 0;
+  /* Form background color */
+  padding: 2.4rem 0;
+  /* Padding around form */
   display: flex;
+  flex-direction: column;
+  /* Stack form elements vertically */
   align-items: center;
+  /* Center elements */
   justify-content: center;
-  gap: 0.8rem;
+  /* Center elements */
+  gap: 1rem;
+  /* Space between elements */
+  text-align: center;
+  /* Center text */
+}
+
+.form-container {
+  display: flex;
+  gap: 0.7rem;
+  /* Space between inputs */
 }
 
 h3 {
   margin-right: 1.6rem;
   font-size: 2.4rem;
+  /* Subtitle font size */
 }
 
 button,
 select,
 input {
   background-color: #ffebb3;
+  /* Input background color */
   color: #5a3e2b;
-  font-family: inherit;
+  /* Input text color */
   border: none;
   border-radius: 10rem;
+  /* Rounded corners */
   padding: 1.2rem 3.2rem;
+  /* Padding inside inputs */
   font-weight: 700;
+  /* Bold font */
   font-size: 1.8rem;
+  /* Font size */
   cursor: pointer;
+  /* Pointer on hover */
 }
 
 .add-form button {
   text-transform: uppercase;
+  /* Uppercase text */
   background-color: #76c7ad;
+  /* Button background color */
 }
 
 .list {
   background-color: #5a3e2b;
+  /* List background color */
   color: #ffebb3;
-  padding: 2rem 0; /* Adjust padding if you want to reduce extra space */
+  /* List text color */
+  padding: 2rem 0;
+  /* Padding around list */
   display: flex;
+  /* Flex layout */
   flex-direction: column;
-  gap: 2rem; /* Reduce the gap if needed */
-  align-items: center;
-  height: auto; /* Let it grow naturally */
-  /* justify-content: center; */
+  /* Stack items vertically */
+  gap: 2rem;
+  /* Space between items */
+  height: auto;
+  /* Auto height */
+  min-height: 40vh;
+  /* Minimum height for the list */
+  justify-content: flex-start;
+  /* Align items at the top */
+  position: relative;
 }
 
+.actions {
+  position: absolute;
+  /* Position actions at the bottom */
+  bottom: 20px;
+  /* Distance from the bottom */
+  width: 100%;
+  /* Full width */
+  text-align: center;
+  /* Center actions */
+}
 
 .actions button,
 .list select {
   text-transform: uppercase;
+  /* Uppercase text */
   padding: 0.8rem 2.4rem;
+  /* Padding inside buttons */
   font-size: 1.4rem;
+  /* Font size */
   font-weight: 700;
+  /* Bold font */
   margin: 0 0.8rem;
+  /* Margin around buttons */
 }
 
 .list ul {
   list-style: none;
+  /* No list style */
   width: 80%;
-  overflow: auto; /* You can switch to visible if no scrolling is wanted */
+  /* Width of the list */
+  overflow: auto;
+  /* Scroll if overflow */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Ensure responsive grid */
+  /* Grid layout */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  /* Responsive grid */
   gap: 1.2rem;
+  /* Space between grid items */
   justify-content: center;
+  /* Center grid items */
   align-content: start;
+  /* Align content at the start */
+  flex-grow: 1;
+  /* Allow the list to take up available space */
 }
 
 .list li {
   display: flex;
+  /* Flex layout for list items */
   align-items: center;
+  /* Center items */
   gap: 1rem;
-  padding: 1rem; /* Add some padding to each item */
-   /* Optional, for visual separation */
+  /* Space between items */
+  padding: 1rem;
+  /* Padding around items */
 }
 
 .list li span {
-  flex-grow: 1; /* Allows the text and item to take up available space */
+  flex-grow: 1;
+  /* Allow text to take up space */
 }
 
 input[type="checkbox"] {
   height: 2rem;
+  /* Checkbox height */
   width: 2rem;
+  /* Checkbox width */
   accent-color: #e5771f;
+  /* Checkbox color */
 }
+
 .list li button {
   cursor: pointer;
+  /* Pointer on hover */
   background: none;
+  /* No background */
   border: none;
+  /* No border */
   font-size: 1.8rem;
+  /* Font size */
   padding: 0.8rem;
+  /* Padding inside buttons */
   transform: translateY(2px);
-  color: #ffebb3; /* Ensure visibility on dark background */
+  /* Slight move down on click */
+  color: #ffebb3;
+  /* Ensure visibility on dark background */
 }
 
 .stats {
   background-color: #76c7ad;
+  /* Stats background color */
   text-align: center;
+  /* Center text */
   font-weight: 700;
+  /* Bold font */
   padding: 3.2rem 0;
+  /* Padding around stats */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  html {
+    font-size: 55%;
+    /* Smaller font for smaller screens */
+  }
+
+  body {
+    font-size: 2rem;
+    /* Adjusted body font size */
+  }
+
+  h1 {
+    font-size: 5rem;
+    /* Smaller header font size */
+  }
+
+  .add-form {
+    padding: 2rem 0;
+    /* Adjust form padding */
+  }
+
+  .form-container {
+    flex-direction: column;
+    /* Stack inputs vertically on smaller screens */
+    gap: 1rem;
+    /* Increase gap */
+  }
+
+  .list {
+    min-height: 50vh;
+    /* Increased minimum height for visibility */
+  }
+
+  .list ul {
+    width: 90%;
+    /* Wider list on smaller screens */
+  }
+
+  .actions {
+    bottom: 10px;
+    /* Adjust actions position */
+  }
+}
+
+@media (max-width: 383px) {
+  html {
+    font-size: 50.5%;
+    /* Further reduced font size */
+  }
+
+  body {
+    font-size: 1.8rem;
+    /* Adjusted body font size */
+  }
+
+  h1 {
+    font-size: 4rem;
+    /* Smaller header font size */
+  }
+
+  .add-form {
+    padding: 1.6rem 0;
+    /* Further adjusted form padding */
+  }
+
+  .list {
+    min-height: 60vh;
+    /* Increased minimum height for visibility */
+  }
+
+  .actions {
+    bottom: 5px;
+  }
+
+  .actions button {
+    margin: 10px;
+  }
 }
