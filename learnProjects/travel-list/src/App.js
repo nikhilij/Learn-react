@@ -8,11 +8,16 @@ const initialItems = [
 ];
 
 function App() {
+  const [Items, setItems] = useState([]);
+
+  function handleAddItems(item) {
+    setItems((Items) => [...Items, item]);
+  }
   return (
     <div className="app">
       <Logo />
-      <Form />
-      <PackingList />
+      <Form onAdditems={handleAddItems}/>
+      <PackingList Items={Items}/>
       <Stats />
     </div>
   );
@@ -22,46 +27,59 @@ function Logo() {
   return <h1>🌴Far Away👝</h1>;
 }
 
-function Form() {
+function Form({onAdditems}) {
 
-  const [description,setDescription] = useState("");
+  const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
+  
 
-  function handleSubmit(e){
+
+  function handleSubmit(e) {
     e.preventDefault();
     console.log(e);
+
+    const newItem = { description, quantity, packed: false, id: Date.now() };
+
+    console.log(newItem);
+
+    onAdditems(newItem);
+    // function handleQuantity(e){
+
+    // }
+    setDescription("");
+    setQuantity(1);
   }
 
-  // function handleQuantity(e){
-    
-  // }
+  // if(!description) return;
+
+
 
   return (
     <form className="add-form" onSubmit={handleSubmit}>
       <h3>What do you need for your trip? 😍</h3>
-      <select value={quantity} onChange={(e)=>setQuantity(Number(e.target.value))}>
+      <select value={quantity} onChange={(e) => setQuantity(Number(e.target.value))}>
 
         {/* since the e.target.value is always a string so change this to number */}
-        {[...Array(20)].map((_,index)=>(
-          <option key={index+1} value={index+1}>{index+1}</option>
+        {[...Array(20)].map((_, index) => (
+          <option key={index + 1} value={index + 1}>{index + 1}</option>
         ))}
       </select>
-      <input type="text" placeholder="Item..." value={description} onChange={(e)=> {console.log(e.target.value); setDescription(e.target.value)}}/>
+      <input type="text" placeholder="Item..." value={description} onChange={(e) => { console.log(e.target.value); setDescription(e.target.value) }} />
 
-      
+
       <button>Add</button>
     </form>
   );
 }
 
-function PackingList() {
+function PackingList({Items}) {
 
   return (
     <>
       <div className="list">
         <ul>
-          {initialItems.map((item) => (
-            <Item item={item} key={item.id}/>
+          {Items.map((item) => (
+            <Item item={item} key={item.id} />
           ))}
         </ul>
       </div>
@@ -73,17 +91,17 @@ function Item({ item }) {
 
   const [packed, setPacked] = useState(item.packed);
 
-  function handleChange(){
+  function handleChange() {
     setPacked(!packed);
   }
 
   return (
     <>
       <li >
-        <span style={{textDecoration:packed?`line-through`:""}}>
-        <input type="checkbox" checked={packed} onChange={handleChange}/>
-        {" "}{item.quantity}{" "}{item.description}
-        <button >❌</button>
+        <span style={{ textDecoration: packed ? `line-through` : "" }}>
+          <input type="checkbox" checked={packed} onChange={handleChange} />
+          {" "}{item.quantity}{" "}{item.description}
+          <button >❌</button>
         </span>
       </li>
     </>
@@ -97,5 +115,6 @@ function Stats() {
     </footer>
   );
 }
+
 
 export default App;
