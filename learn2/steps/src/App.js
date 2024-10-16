@@ -1,62 +1,80 @@
-import React from "react";
-import { useState } from "react";
-import "./index.css"; // Import the stylesheet
+// App.js file for the previous work where we learn about state 
+import './index.css';
+import { useState } from 'react';
+
+const messages = [
+  "Learn React ⚛️",
+  "Apply for jobs 💼",
+  "Invest your new income 🤑",
+];
 
 function App() {
+
   return (
-    <div className="contents">
-      <Counter />
-    </div>
-  );
+    <>
+      <div>
+      <Steps />
+      </div>
+    </>
+  )
+
+
+
 }
 
-function Counter() {
-  const [count, setCount] = useState(0);
-  const [step, setStep] = useState(1);
 
-  const date = new Date();
-  date.setDate(date.getDate()+count);
+function Steps() {
+  const [step, setSteps] = useState(1);
+  const [isOpen, setOpen] = useState(true);
 
-
-  function handleStepInc() {
-    setStep((s) => s + 1);
+  function handlePrevious() {
+    //if(step>1)
+    setSteps((s) => s - 1);
   }
 
-  function handleStepDec() {
-    setStep((s) => (s > 1 ? s - 1 : 1));
-  }
-
-  function handleCountInc() {
-    setCount((c) => c + step);
-  }
-
-  function handleCountDec() {
-    setCount((c) => c - step);
+  function handleNext() {
+    // if(step<3)
+    setSteps((s) => s + 1);
   }
 
 
   return (
     <>
       <div>
-      {console.log(date)}
-      <button onClick={handleStepDec}>-</button>
-      <span>Step: {step}</span>
-      <button onClick={handleStepInc}>+</button>
-      <br />
-      <button onClick={handleCountDec}>-</button>
-      <span>Count: {count}</span>
-      <button onClick={handleCountInc}>+</button>
+        <button className='close' onClick={() => setOpen((is) => !is)}>&times;</button>
+        {isOpen && (
+          <div className="steps">
+            <div className="numbers">
+              <div className={step >= 1 ? 'active' : ''}>1</div>
+              <div className={step >= 2 ? 'active' : ''}>2</div>
+              <div className={step >= 3 ? 'active' : ''}>3</div>
+            </div>
+            <p className="message">
+              Step {step} : {messages[step - 1]}
+            </p>
+            <div className="buttons">
+              <button
+                onClick={handlePrevious}
+                style={{ backgroundColor: '#7950f2', color: '#fff' }}
+                disabled={step === 1}
+              >
+                Previous
+              </button>
+              <button
+                onClick={handleNext}
+                style={{ backgroundColor: '#7950f2', color: '#fff' }}
+                disabled={step === messages.length}
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-      <div>
-      {count === 0
-        ? `Today Date is ${date.toDateString()}`
-        : count > 0
-        ? `${count} days from today is ${date.toDateString()}`
-        : `${Math.abs(count)} days ago was ${date.toDateString()}`}
-      </div>
-      
+
     </>
   );
+
 }
 
 export default App;

@@ -1,4 +1,4 @@
-/* /* 
+/* 
 const messages = [
   "Learn React ⚛️",
   "Apply for jobs 💼",
@@ -6,7 +6,7 @@ const messages = [
 ];
  */
 
-/* {
+* {
   box-sizing: border-box;
 }
 
@@ -97,16 +97,16 @@ h3 {
 .close:hover {
   color: #7950f2;
 } 
-*/
 
-body {
+
+/* body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Ensures full height coverage */
+  height: 100vh; 
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0; /* Light background for better visibility */
+  background-color: #f0f0f0; 
 }
 
 .contents {
@@ -118,8 +118,8 @@ body {
   width:700px;
   margin-top: 50px;
   background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds slight shadow for depth */
-  border-radius: 10px; /* Smoothen the edges */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  border-radius: 10px; 
   padding: 20px;
 }
 
@@ -147,4 +147,4 @@ button:hover:not(:disabled) {
 span {
   font-size: 18px;
   margin: 10px;
-}
+} */
