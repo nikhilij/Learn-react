@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.css";
 
 const tempMovieData = [
@@ -48,9 +48,38 @@ const tempWatchedData = [
   },
 ];
 
+const KEY = "148b1bf9";
+
 function App() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
+  const [isLoading, setisLoading] = useState(false);
+  const [error, setError] = useState("");
+  const query = "godzilla";
+
+  useEffect(function () {
+    async function fetchMovies() {
+      try {
+        setisLoading(true);
+        const res = await fetch(
+          `http://www.omdbapi.com/?i=tt3896198&apikey=${KEY}&s=${query}`
+        );
+
+        if (!res.ok)
+          throw new Error("Something went wrong with fetching movies");
+
+        
+        const data = await res.json();
+        setMovies(data.Search);
+      } catch (e) {
+        console.error(e.message);
+        setError(e.message);
+      } finally {
+        setisLoading(false);
+      }       
+    }
+    fetchMovies();
+  }, []);
 
   return (
     <>
@@ -60,7 +89,9 @@ function App() {
       </NavBar>
       <Main>
         <Box>
-          <MovieList movies={movies} />
+          {isLoading && <Loader />}
+          {!isLoading && !error && <MovieList movies={movies} />}
+          {error && <ErrorMessage message={error} />}
         </Box>
         <Box>
           <Summary watched={watched} />
@@ -68,6 +99,17 @@ function App() {
         </Box>
       </Main>
     </>
+  );
+}
+
+function Loader() {
+  return <p className="loader">Loading...</p>;
+}
+function ErrorMessage({ message }) {
+  return (
+    <p className="error">
+      <span>⛔</span> {message}
+    </p>
   );
 }
 
