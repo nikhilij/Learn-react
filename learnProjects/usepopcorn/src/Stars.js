@@ -27,7 +27,6 @@ function StarsRating({ maxRating = 5, color = "#fcc419", size = 48, onSetRating 
 
   const starContainerStyle = {
     display: "flex",
-    gap: "6px", // Optional: adds space between stars
   };
 
   const textStyle = {
