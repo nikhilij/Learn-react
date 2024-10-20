@@ -5,7 +5,7 @@ import { useMovies } from "./hooks/useMovies";
 import { useLocalStorageState } from "./hooks/useLocalStorageState";
 import { useKey } from "./hooks/useKey";
 
-const KEY = "148b1bf9";
+const KEY = process.env.REACT_APP_OMDB_API_KEY;
 
 function App() {
   const [query, setQuery] = useState("");
@@ -255,7 +255,7 @@ function MovieDetail({ selectedId, onCloseMovie, onAddWatched, watched }) {
       async function getMovieDetail() {
         setLoading(true);
         const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
+          `https://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
         );
 
         const data = await res.json();
