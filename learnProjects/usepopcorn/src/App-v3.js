@@ -3,7 +3,6 @@ import StarsRating from "./Stars";
 import "./index.css";
 import { useMovies } from "./hooks/useMovies";
 import { useLocalStorageState } from "./hooks/useLocalStorageState";
-import { useKey } from "./hooks/useKey";
 
 const KEY = "148b1bf9";
 
@@ -99,13 +98,22 @@ function Logo() {
 
 function Search({ query, setQuery }) {
   const inputEl = useRef(null);
-  useKey("Enter", function () {
-    if (document.activeElement === inputEl.current) {
-      return;
-    }
-    inputEl.current.focus();
-    setQuery("");
-  });
+  useEffect(
+    function () {
+      function callback(e) {
+        if (document.activeElement === inputEl.current) {
+          return;
+        }
+        if (e.code === "Enter") {
+          inputEl.current.focus();
+          setQuery("");
+        }
+      }
+      document.addEventListener("keydown", callback);
+      return () => document.addEventListener("keydown", callback);
+    },
+    [setQuery]
+  );
 
   return (
     <>
@@ -248,8 +256,33 @@ function MovieDetail({ selectedId, onCloseMovie, onAddWatched, watched }) {
     onCloseMovie();
   }
 
-  useKey("Escape", onCloseMovie);
+  useEffect(
+    function () {
+      function callback(e) {
+        if (e.code === "Escape") {
+          onCloseMovie();
+        }
+      }
+      document.addEventListener("keydown", callback);
+      return function () {
+        document.removeEventListener("keydown", callback);
+      };
+    },
 
+    [onCloseMovie]
+  );
+
+  useEffect(
+    function () {
+      if (!title) return;
+      document.title = `Movie | ${title}`;
+
+      return function () {
+        document.title = "usePopcorn";
+      };
+    },
+    [title]
+  );
   useEffect(
     function () {
       async function getMovieDetail() {
@@ -267,17 +300,6 @@ function MovieDetail({ selectedId, onCloseMovie, onAddWatched, watched }) {
     [selectedId]
   );
 
-  useEffect(
-    function () {
-      if (!title) return;
-      document.title = `Movie | ${title}`;
-
-      return function () {
-        document.title = "usePopcorn";
-      };
-    },
-    [title]
-  );
   return (
     <div className="details">
       {isLoading ? (

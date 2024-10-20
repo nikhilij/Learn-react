@@ -8,7 +8,7 @@ export function useLocalStorageState(initalState, key) {
 
   useEffect(
     function () {
-      localStorage.setItem("watched", JSON.stringify(value));
+      localStorage.setItem(key, JSON.stringify(value));
     },
     [value, key]
   );
