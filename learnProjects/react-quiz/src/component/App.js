@@ -1,3 +1,4 @@
+import Timer from "./Timer";
 import React, { useEffect, useReducer } from "react";
 import Header from "./Header";
 import Main from "./Main";
@@ -18,6 +19,7 @@ const initalState = {
   answer: null,
   points: 0,
   highscore: 0,
+  secondsRemaining: 10,
 };
 
 function reducer(state, action) {
@@ -66,17 +68,26 @@ function reducer(state, action) {
         questions: state.questions,
         status: "ready",
       };
+
+    case "tick":
+      return {
+        ...state,
+        secondsRemaining: state.secondsRemaining - 1,
+        status: state.secondsRemaining === 0 ? "finished" : state.status,
+      };
     default:
       throw new Error("Action unkown");
   }
 }
 function App() {
-  const [{ questions, status, index, answer, points, highscore }, dispatch] =
-    useReducer(reducer, initalState);
+  const [
+    { questions, status, index, answer, points, highscore, secondsRemaining },
+    dispatch,
+  ] = useReducer(reducer, initalState);
 
   const len = questions.length;
   const maxPoints = questions.reduce((acc, curr) => acc + curr.points, 0);
-  console.log(maxPoints);
+  // console.log(maxPoints);
   useEffect(function () {
     fetch(`http://localhost:8000/questions`)
       .then((res) => res.json())
@@ -94,7 +105,7 @@ function App() {
           {status === "ready" && (
             <StartScreen length={len} dispatch={dispatch} />
           )}
-          {console.log(questions[index])}
+          {/* {console.log(questions[index])} */}
           {status === "active" && (
             <>
               <Progress
@@ -110,7 +121,10 @@ function App() {
                 questions={questions[index]}
               />
               <Footer>
-                <Timer />
+                <Timer
+                  dispatch={dispatch}
+                  secondsRemaining={secondsRemaining}
+                />
                 <NextButton
                   dispatch={dispatch}
                   answer={answer}

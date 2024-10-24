@@ -1,8 +1,7 @@
-import
-function Footer({children}) {
+function Footer({ children }) {
   return (
     <>
-        {children}
+      <footer>{children}</footer>
     </>
   );
 }
