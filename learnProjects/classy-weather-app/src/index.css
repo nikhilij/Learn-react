@@ -11,7 +11,7 @@ html {
 }
 
 body {
-  font-family: "Cinzel Decorative", cursive;
+  font-family: "Cinzel Decorative", 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
   font-size: 2rem;
   height: 100vh;
   color: #222;
@@ -89,4 +89,14 @@ input:focus {
 .loader {
   font-size: 2.4rem;
   font-weight: 700;
+}
+
+button{
+  padding: 15px 20px;
+  background-color: aqua;
+  cursor: pointer;
+  transition: background-color 1s ease;
+}
+button:hover{
+  background-color: rgb(1, 149, 149);
 }
