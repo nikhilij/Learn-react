@@ -7,12 +7,12 @@
 }
 
 html {
-  font-size: 62.5%;
+  font-size: 62.5%; /* Base font size for rem scaling */
 }
 
 body {
   font-family: "Cinzel Decorative", 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
-  font-size: 2rem;
+  font-size: 2rem; /* Default font size */
   height: 100vh;
   color: #222;
   background-color: #eabfb9;
@@ -63,13 +63,15 @@ input:focus {
   list-style: none;
   display: flex;
   gap: 2.4rem;
+  flex-wrap: wrap; /* Add flex-wrap for better behavior on smaller screens */
+  justify-content: center;
+  /* border: 2px solid black; */
 }
 
 .day {
   background-color: #f0d2ce;
   padding: 1.6rem 0 2rem;
   width: 12.8rem;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -91,12 +93,83 @@ input:focus {
   font-weight: 700;
 }
 
-button{
+button {
   padding: 15px 20px;
   background-color: aqua;
   cursor: pointer;
   transition: background-color 1s ease;
 }
-button:hover{
+
+button:hover {
   background-color: rgb(1, 149, 149);
+}
+
+/* Responsive Design */
+/* Adjust layout and font sizes for smaller screens */
+@media (max-width: 768px) {
+  html {
+    font-size: 56.25%; /* Scale down the base font size */
+  }
+
+  .app {
+    width: 90%; /* Reduce the width of the app container */
+    gap: 3rem;
+    padding: 4rem 0;
+    outline-offset: 1rem;
+  }
+
+  h1 {
+    font-size: 4.8rem;
+  }
+
+  input {
+    width: 28rem;
+    padding: 1.2rem 2.4rem;
+    font-size: 1.8rem;
+  }
+
+  .day {
+    width: 10.8rem; /* Smaller day box */
+    padding: 1.4rem 0 1.8rem;
+  }
+
+  .day span {
+    font-size: 4.2rem; /* Smaller weather icon */
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 50%; /* Further scale down the base font size */
+  }
+
+  .app {
+    width: 100%; /* Full width */
+    gap: 2rem;
+    padding: 3rem 0;
+  }
+
+  h1 {
+    font-size: 3.6rem;
+  }
+
+  input {
+    width: 24rem;
+    padding: 1rem 2rem;
+    font-size: 1.6rem;
+  }
+
+  .day {
+    width: 9.6rem; /* Even smaller day box */
+    padding: 1.2rem 0 1.6rem;
+  }
+
+  .day span {
+    font-size: 3.6rem; /* Smaller weather icon */
+  }
+
+  button {
+    padding: 12px 18px; /* Adjust button padding */
+    font-size: 1.6rem; /* Adjust button text size */
+  }
 }
