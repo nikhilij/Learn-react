@@ -3,7 +3,9 @@ import React from "react";
 function Main({ children }) {
   return(
     <>
-        {children}
+        <div className="main">
+            {children}
+        </div>
     </>
   )
 }
