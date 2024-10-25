@@ -11,6 +11,7 @@ import Footer from "./Footer";
 import NextButton from "./NextButton";
 import Progress from "./Progress";
 import FinishScreen from "./FinishScreen";
+import questionsData from "./questions";
 const initalState = {
   questions: [],
   // loading ,error,  ready , active , finished,
@@ -19,9 +20,10 @@ const initalState = {
   answer: null,
   points: 0,
   highscore: 0,
-  secondsRemaining: 10,
+  secondsRemaining: null,
 };
 
+const SEC_PER_QUESTION = 30;
 function reducer(state, action) {
   switch (action.type) {
     case "dataReceived":
@@ -38,31 +40,44 @@ function reducer(state, action) {
       };
 
     case "start":
-      return { ...state, status: "active" };
+      const secondsRemaining = state.questions.length * SEC_PER_QUESTION;
+      localStorage.setItem(
+        "quizState",
+        JSON.stringify({ ...state, status: "active", secondsRemaining })
+      );
+      return { ...state, status: "active", secondsRemaining };
 
     case "newAnswer":
-      const question = state.questions.at(state.index);
-      return {
+      const question = state.questions[state.index];
+      const newPoints =
+        action.payload === question.correctOption
+          ? state.points + question.points
+          : state.points;
+      const updatedState = {
         ...state,
         answer: action.payload,
-        points:
-          action.payload === question.correctOption
-            ? state.points + question.points
-            : state.points,
+        points: newPoints,
       };
+      localStorage.setItem("quizState", JSON.stringify(updatedState));
+      return updatedState;
 
     case "nextquestion":
-      return { ...state, index: state.index + 1, answer: null };
+      const nextState = { ...state, index: state.index + 1, answer: null };
+      localStorage.setItem("quizState", JSON.stringify(nextState));
+      return nextState;
 
     case "finish":
-      return {
+      const finishedState = {
         ...state,
         status: "finished",
         highscore:
           state.points > state.highscore ? state.points : state.highscore,
       };
+      localStorage.setItem("quizState", JSON.stringify(finishedState));
+      return finishedState;
 
     case "restart":
+      localStorage.removeItem("quizState");
       return {
         ...initalState,
         questions: state.questions,
@@ -70,31 +85,49 @@ function reducer(state, action) {
       };
 
     case "tick":
-      return {
+      const tickState = {
         ...state,
         secondsRemaining: state.secondsRemaining - 1,
         status: state.secondsRemaining === 0 ? "finished" : state.status,
       };
+      localStorage.setItem("quizState", JSON.stringify(tickState));
+      return tickState;
+
     default:
-      throw new Error("Action unkown");
+      throw new Error("Action unknown");
   }
 }
+
 function App() {
+  const savedState = localStorage.getItem("quizState");
+  const initialStateFromLocalStorage = savedState
+    ? JSON.parse(savedState)
+    : initalState;
+
   const [
     { questions, status, index, answer, points, highscore, secondsRemaining },
     dispatch,
-  ] = useReducer(reducer, initalState);
+  ] = useReducer(reducer, initialStateFromLocalStorage);
 
   const len = questions.length;
   const maxPoints = questions.reduce((acc, curr) => acc + curr.points, 0);
-  // console.log(maxPoints);
-  useEffect(function () {
-    fetch(`http://localhost:8000/questions`)
-      .then((res) => res.json())
-      .then((data) => dispatch({ type: "dataReceived", payload: data }))
-      .catch((err) => dispatch({ type: "dataFailed" }));
-  }, []);
 
+  // useEffect(
+  //   function () {
+  //     if (!savedState) {
+  //       fetch(`http://localhost:8000/questions`)
+  //         .then((res) => res.json())
+  //         .then((data) => dispatch({ type: "dataReceived", payload: data }))
+  //         .catch((err) => dispatch({ type: "dataFailed" }));
+  //     }
+  //   },
+  //   [savedState]
+  // );
+
+  useEffect(() => {
+    // Fetch questions from local JSON
+    dispatch({ type: "dataReceived", payload: questionsData });
+  }, []);
   return (
     <>
       <div className="app">
@@ -105,7 +138,6 @@ function App() {
           {status === "ready" && (
             <StartScreen length={len} dispatch={dispatch} />
           )}
-          {/* {console.log(questions[index])} */}
           {status === "active" && (
             <>
               <Progress
